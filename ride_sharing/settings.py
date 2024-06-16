@@ -14,6 +14,9 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
@@ -128,9 +131,11 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 # settings.py
 
-TWILIO_ACCOUNT_SID = 'AC0bf5d72200ff65ea9c360667f290608f'
-TWILIO_AUTH_TOKEN = '0ad0ae25b242bb94bddc601862684c81'
-TWILIO_PHONE_NUMBER = '+14705162053'
+
+
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER = os.getenv('TWILO_PHONE_NUMBER')
 
 # import logging
 
