@@ -1,0 +1,14 @@
+<!-- templates/give_feedback.html -->
+{% extends 'base.html' %}
+
+{% block title %}Give Feedback{% endblock %}
+
+{% block content %}
+<h1>Give Feedback</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+</form>
+<a href="{% url 'ride_detail' ride.trip_id %}" class="btn btn-secondary">Back to Ride Details</a>
+{% endblock %}

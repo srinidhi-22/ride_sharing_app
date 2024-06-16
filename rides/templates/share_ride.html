@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Share Ride{% endblock %}
+
+{% block content %}
+<h1>Share Ride Details</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="companion_username">Companion Username:</label>
+    <input type="text" id="companion_username" name="companion_username">
+    <button type="submit" name="send_via" value="sms">Share via SMS</button>
+    <button type="submit" name="send_via" value="whatsapp">Share via WhatsApp</button>
+</form>
+<a href="{% url 'ride_detail' ride.trip_id %}">Back to Ride Details</a>
+{% endblock %}

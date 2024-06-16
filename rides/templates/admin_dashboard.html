@@ -1,0 +1,13 @@
+<!-- templates/admin_dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+<ul>
+    <li><a href="{% url 'ride_list' %}">View All Rides</a></li>
+    <!-- Add more admin functionalities here -->
+</ul>
+<a href="{% url 'home' %}">Back to Home</a>
+{% endblock %}

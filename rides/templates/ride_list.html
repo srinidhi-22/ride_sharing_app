@@ -1,0 +1,68 @@
+<!-- templates/ride_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}My Rides{% endblock %}
+
+{% block content %}
+<h1>My Rides</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Trip ID</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if rides %}
+        {% for ride in rides %}
+        <tr>
+            <td><a href="{% url 'ride_detail' ride.trip_id %}">{{ ride.trip_id }}</a></td>
+            <td>{{ ride.status }}</td>
+            <td>
+                {% if ride.status == 'in_progress' %}
+                <form method="post" action="{% url 'share_ride' ride.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" name="send_via" value="sms" class="btn btn-primary btn-sm">Share via SMS</button>
+                    <button type="submit" name="send_via" value="whatsapp" class="btn btn-success btn-sm">Share via WhatsApp</button>
+                </form>
+                {% endif %}
+                {% if ride.status == 'in_progress' %}
+                <form method="post" action="{% url 'complete_ride' ride.trip_id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning btn-sm">Mark as Completed</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </tbody>
+    <tbody>
+        {% if companionrides %}
+        {% for ride in companionrides %}
+            <tr>
+                <td><a href="{% url 'ride_detail' ride.trip_id %}">{{ ride.trip_id }}</a></td>
+                <td>{{ ride.status }}</td>
+                <td>
+                    {% if ride.status == 'completed' %}
+                        {% if ride.feedbacks.all %}
+                            <!-- Display stars based on the rating -->
+                            <div class="rating">
+                            </div>
+                            <!-- Display feedback comments -->
+                            {% for feedback in ride.feedbacks.all %}
+                                <p>{{ feedback.comments }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <a href="{% url 'give_feedback' ride.trip_id %}" class="btn btn-info btn-sm">Give Feedback</a>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!-- templates/ride_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}Ride Detail{% endblock %}
+
+{% block content %}
+<h1>Ride Details for {{ ride.trip_id }}</h1>
+<p>Driver Name: {{ ride.driver_name }}</p>
+<p>Driver Phone Number: {{ ride.driver_phone }}</p>
+<p>Cab Number: {{ ride.cab_number }}</p>
+<p>Status: {{ ride.status }}</p>
+<p>Start Time: {{ ride.start_time }}</p>
+<p>End Time: {{ ride.end_time }}</p>
+
+{% if ride.status == 'in_progress' and user == ride.traveler %}
+<a href="{% url 'complete_ride' ride.trip_id %}">Mark as Completed</a>
+{% endif %}
+
+<a href="{% url 'ride_list' %}">Back to Ride List</a>
+{% endblock %}
